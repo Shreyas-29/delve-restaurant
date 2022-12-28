@@ -19,13 +19,6 @@ const Menus = ({ menu }) => {
         setShowCart(true);
     }
 
-    const router = useRouter();
-    if (router.isFallback) {
-        return <>
-            <Loader />
-        </>
-    }
-
     return (
         <div className='container mx-auto lg:px-20 px-4 my-8 pb-12'>
             <Head>
@@ -105,6 +98,6 @@ export async function getStaticPaths() {
     const menus = await getMenu();
     return {
         paths: menus.map(({ node: { slug } }) => ({ params: { slug } })),
-        fallback: true,
+        fallback: 'blocking',
     };
 }
