@@ -6,6 +6,7 @@ import Dishes from "./Dishes";
 import Discount from "./Discount";
 import Footer from "./Footer";
 import MenuCard from "./MenuCard";
+import Loader from "./Loader";
 
 export {
     Header,
@@ -16,4 +17,5 @@ export {
     Dishes,
     MenuCard,
     Footer,
+    Loader,
 }

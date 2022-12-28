@@ -7,6 +7,7 @@ import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import { useStateContext } from '../../context/StateContext';
 import { IoHelpCircle } from 'react-icons/io5'
 import { Rating } from '@mui/material'
+import { Loader } from '../../components'
 
 const Menus = ({ menu }) => {
 
@@ -21,7 +22,7 @@ const Menus = ({ menu }) => {
     const router = useRouter();
     if (router.isFallback) {
         return <>
-            Loading...
+            <Loader />
         </>
     }
 

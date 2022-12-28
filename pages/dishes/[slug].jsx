@@ -8,6 +8,7 @@ import { useStateContext } from '../../context/StateContext';
 import { IoHelpCircle } from 'react-icons/io5'
 import { Rating } from '@mui/material'
 import { useSession } from 'next-auth/react'
+import { Loader } from '../../components'
 
 const Dish = ({ dish }) => {
 
@@ -23,7 +24,7 @@ const Dish = ({ dish }) => {
     const router = useRouter();
     if (router.isFallback) {
         return <>
-            Loading...
+            <Loader />
         </>
     }
 
