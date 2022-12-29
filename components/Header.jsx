@@ -6,6 +6,7 @@ import { Toast } from 'react-hot-toast';
 import Cart from './Cart';
 import { useStateContext } from '../context/StateContext';
 import { useSession } from 'next-auth/react';
+import Image from 'next/image';
 
 const Header = () => {
 
@@ -21,7 +22,7 @@ const Header = () => {
         setCartOpen(!cartOpen);
     }
     const closeMenu = () => {
-        setIsOpen(false)
+        setIsOpen(!isOpen)
     }
 
     return (
@@ -82,24 +83,17 @@ const Header = () => {
                             {totalQuantities}
                         </span>
                     </span>
-                    {cartOpen && (
-                        <>
-                            <div className='bg-orange-500 absolute top-8 rounded-md py-8 z-20 flex w-60 left-0 transform duration-300 items-center justify-center transition-transform'>
-                                <h2 className='text-2xl font-semibold text-white'>MY CART</h2>
-                            </div>
-                        </>
-                    )}
+                    {showCart && <Cart />}
+
                 </div>
                 <Link href={'/'}>
-                    <h1 className={isOpen ? 'text-2xl font-semibold text-white drop-shadow' : 'text-2xl font-semibold text-orange-500 drop-shadow'}>
-                        D
-                    </h1>
+                    <Image src={'/favicon.svg'} alt='logo' width={2000} height={2000} unoptimized className='w-8 h-8' />
                 </Link>
                 <div className='realtive z-50'>
                     <Hamburger toggle={setIsOpen} toggled={isOpen} color={isOpen ? '#fff' : '#000'} size={20} rounded distance='sm' />
                     {isOpen && (
                         <>
-                            <div className='flex flex-col items-center justify-center space-y-2 bg-gradient-to-br from-orange-500 via-amber-500 to-yellow-500 absolute w-60 h-screen right-0 top-0 -z-10 transition duration-300 ease-linear'>
+                            <div className='flex flex-col items-start justify-center space-y-2 bg-gradient-to-br from-orange-500 via-amber-500 to-yellow-500 absolute w-60 h-screen right-0 top-0 -z-10 transition duration-300 ease-linear'>
                                 <Link href={'/'} className='w-full' onClick={closeMenu}>
                                     <li className='text-bold text-white capitalize py-2 px-8 mx-4 hover:text-orange-500 hover:bg-white w-full rounded-md transition duration-200'>Home</li>
                                 </Link>
@@ -109,6 +103,20 @@ const Header = () => {
                                 <Link href={'/about'} className='w-full' onClick={closeMenu}>
                                     <li className='text-bold text-white capitalize py-2 px-8 mx-4 hover:text-orange-500 hover:bg-white w-full rounded-md transition duration-200'>About</li>
                                 </Link>
+                                {session ? (
+                                    <Link href={'/login'} className='w-full' onClick={closeMenu}>
+                                        <li className='capitalize text-white mx-4 px-8 py-2 mt-4 hover:text-orange-500 rounded-md hover:bg-white text-start w-full font-semibold relative transition-all duration-300 hover:scale-110 active:scale-95 ease-in-out'>
+                                            sign out
+                                        </li>
+                                    </Link>
+                                ) : (
+                                    <Link href={'/login'} className='w-full' onClick={closeMenu}>
+                                        <li className='capitalize text-white mx-4 px-8 py-2 mt-4 hover:text-orange-500 rounded-md hover:bg-white text-start w-full font-semibold relative transition-all duration-300 hover:scale-110 active:scale-95 ease-in-out'>
+                                            login
+                                        </li>
+                                    </Link>
+                                )
+                                }
                             </div>
                         </>
                     )}

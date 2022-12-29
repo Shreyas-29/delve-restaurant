@@ -20,6 +20,10 @@ body {
     overflow-x: hidden;
 }
 
+::-webkit-scrollbar {
+    width: 5px;
+}
+
 body {
     scroll-behavior: smooth;
     font-family: 'Inter', 'SF Pro Display';

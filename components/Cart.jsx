@@ -5,33 +5,12 @@ import { MdDelete } from 'react-icons/md'
 import Image from 'next/image';
 import Link from 'next/link';
 import { useStateContext } from '../context/StateContext';
-import getStripe from '../lib/getStripe';
-import { toast } from 'react-hot-toast';
 
 
 const Cart = () => {
 
     const cartRef = useRef();
     const { totalPrice, totalQuantities, cartItems, setShowCart, toggleCartItemQuanitity, onRemove } = useStateContext();
-
-    const handlePay = async () => {
-        const stripe = await getStripe();
-
-        const response = await fetch('/api/stripe', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(cartItems)
-        });
-
-        if (response.statusCode === 500) return;
-
-        const data = await response.json();
-
-        toast.loading("Redirecting...");
-        stripe.redirectToCheckout({ sessionId: data.id });
-    }
 
 
     return (
@@ -105,11 +84,13 @@ const Cart = () => {
                             <h3 className='font-medium'>₹{totalPrice}</h3>
                         </div>
                         <div className="btn-container px-5">
-                            <button
-                                onClick={handlePay}
-                                className='mt-5 bg-gradient-to-r from-orange-500 to-amber-500 rounded-md text-white font-medium w-full py-3 capitalize hover:scale-110 transition ease-in-out duration-500 shadow-md shadow-orange-500/30'>
-                                Pay with stripe
-                            </button>
+                            <Link href={'/orders'}>
+                                <button
+                                    onClick={() => setShowCart(false)}
+                                    className='mt-5 bg-gradient-to-r from-orange-500 to-amber-500 rounded-md text-white font-medium w-full py-3 capitalize hover:scale-110 transition ease-in-out duration-500 shadow-md shadow-orange-500/30'>
+                                    Checkout
+                                </button>
+                            </Link>
                         </div>
                     </div>
                 )}
